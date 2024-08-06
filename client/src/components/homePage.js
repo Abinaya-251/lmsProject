@@ -6,7 +6,7 @@ import "../assets/styles/Homepage.css"
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-function HomePage() {
+function HomePage({setIsLoggedIn,setUserType}) {
   const {
     register,
     handleSubmit,
@@ -14,44 +14,43 @@ function HomePage() {
   } = useForm();
   const [showPassword, setShowPassword] = useState(true);
   const [invalidError, setInvalidError] = useState();
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
 
   const Onsubmit = (data) => {
-    if (data.role === "student") {
-      axios
-        .post("http://localhost:5000/student/login", data)
-        .then((response) => {
-          console.log("Data saved:", response.data);
-          Navigate("/dashboard");
-        })
-        .catch((error) => {
+    const loginEndpoint = data.role === "student" ? "student/login" : "admin/login";
+    axios
+      .post(`http://localhost:5000/${loginEndpoint}`, data)
+      .then((response) => {
+        console.log("Data saved:", response.data);
+        window.localStorage.setItem("isLoggedIn", "true");
+        window.localStorage.setItem("userType", data.role);
+        window.localStorage.setItem("token", response.data.token);
+        setIsLoggedIn(true)
+        setUserType(data.role)
+        navigate("/dashboard")
+        console.log("hello");
+        
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 500) {
+          setInvalidError("Internal server error. Please try again later.");
+        } else {
           setInvalidError("Invalid Email or password");
-          console.error("Error saving data:", error);
-        });
-    } else {
-      axios
-        .post("http://localhost:5000/admin/login", data)
-        .then((response) => {
-          console.log("Data saved:", response.data);
-          Navigate("/dashboard");
-        })
-        .catch((error) => {
-          console.error("Error saving data:", error);
-          setInvalidError("Invalid Email or password");
-        });
-    }
+        }
+        console.error("Error saving data:", error);
+      });
   };
   const handleShowPassword = (e) => {
     e.preventDefault();
     setShowPassword(!showPassword);
   };
   return (
-    <div class="container w-50 mt-5 p-5 border shadow-lg rounded">
+    <div className="container w-50 mt-5 p-5 border shadow-lg rounded">
       <img src={devopsIMG} alt="devops icon" width={100}></img>
-      <h2 class="fw-bold">Sign in</h2>
+      <h2 className="fw-bold">Sign in</h2>
       <form onSubmit={handleSubmit(Onsubmit)}>
         <div className="row ">
-          <div class="col-sm-2 p-2 mt-3 ml-5 border border-dark rounded">
+          <div className="col-sm-2 p-2 mt-3 ml-5 border border-dark rounded">
             <input
               type="radio"
               id="admin"
@@ -64,7 +63,7 @@ function HomePage() {
             </label>
           </div>
 
-          <div class="col-sm-2 p-2 mt-3 ml-5 border border-dark rounded role">
+          <div className="col-sm-2 p-2 mt-3 ml-5 border border-dark rounded role">
             <input
               type="radio"
               id="student"
@@ -72,18 +71,18 @@ function HomePage() {
               value="student"
               {...register("role", { required: "Please select an option" })}
             />
-            <label htmlFor="student" class="fw-bold fs-6">
+            <label htmlFor="student" className="fw-bold fs-6">
               Student
             </label>
           </div>
           {errors.role && (
-            <span class="col-sm-3 p-3 w-50 text-danger">
+            <span className="col-sm-3 p-3 w-50 text-danger">
               {errors.role.message}
             </span>
           )}
         </div>
         <div className="row mt-3">
-          <label class="row fw-bold fs-6">Email:</label>
+          <label className="row fw-bold fs-6">Email:</label>
           <input
             className="col-sm-5 p-1 border border-dark rounded"
             type="email"
@@ -96,33 +95,33 @@ function HomePage() {
             })}
           ></input>
           {errors.email && (
-            <span class="col text-danger">{errors.email.message}</span>
+            <span className="col text-danger">{errors.email.message}</span>
           )}
-          <label class="row fw-bold fs-6">Password:</label>
+          <label className="row fw-bold fs-6">Password:</label>
           <div className="row">
             <input
-              class="col-sm-5 p-1 h-80 w-50 border border-dark rounded"
+              className="col-sm-5 p-1 h-80 w-50 border border-dark rounded"
               type={showPassword ? "password" : "text"}
               {...register("password", { required: "Password is required" })}
             ></input>
             <button
-              class="col-sm-1 h-80 eyeicon "
+              className="col-sm-1 h-80 eyeicon "
               onClick={(e) => handleShowPassword(e)}
             >
               {showPassword ? <IoMdEyeOff /> : <IoMdEye />}
             </button>
             {errors.password && (
-              <span class="col-sm-3 w-50 text-danger">
+              <span className="col-sm-3 w-50 text-danger">
                 {errors.password.message}
               </span>
             )}
           </div>
         </div>
-        <div class="col">
+        <div className="col">
           <button className="row mt-3 p-2 border fw-bold fs-6 border-dark rounded bg-secondary">
             Login
           </button>
-          {invalidError && <h5 class="mt-3 text-danger">{invalidError}</h5>}
+          {invalidError && <h5 className="mt-3 text-danger">{invalidError}</h5>}
         </div>
       </form>
     </div>
