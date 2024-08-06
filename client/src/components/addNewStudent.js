@@ -3,7 +3,6 @@ import axios from 'axios';
 import { IoMdEyeOff, IoMdEye } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
 import {useForm} from "react-hook-form"
-import Navbar from './navbar';
 import studenticon from "../assets/images/student.png"
 
 function LoginForm() {
@@ -32,13 +31,12 @@ function LoginForm() {
 
   return (
     <div>
-          <Navbar />
           <div className="container mt-5">
             <div className="row justify-content-center">
               <div className="col-md-6 col-lg-4 w-50">
                 <div className="card border shadow-lg rounded p-4">
                   <img src={studenticon} width={50} alt="Student Icon" />
-                  <h3 className="card-title mb-4">Sign in</h3>
+                  <h3 className="card-title mb-4">Sign Up</h3>
                   <form onSubmit={handleSubmit(Onsubmit)}>
                     <div className="mb-3">
                       <label className="fw-bold fs-6" htmlFor='studentName'>Student Name:</label>

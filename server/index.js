@@ -24,6 +24,6 @@ const connectDb = async()=>{
 }
 //LISTENING TO PORT
 app.listen(process.env.PORT,()=>{
-    console.log("server is listening on port 5000");
+    console.log(`server is listening on port ${process.env.PORT}`);
     connectDb()
 })

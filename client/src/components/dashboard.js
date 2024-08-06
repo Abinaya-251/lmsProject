@@ -1,19 +1,16 @@
-import React, { useState } from 'react'
-import Navbar from './navbar.js'
+import React from 'react'
 import Addstudent from "../assets/images/student.png"
 import Addcourse from "../assets/images/addCourse.png"
 import {  useNavigate } from 'react-router-dom'
 
 function Dashboard() {
-  const [role,setRole] = useState("admin")
   const Navigate = useNavigate();
   const handleAddStudentBtn = () =>{
       Navigate("/addStudent")
   }
   return (
     <div>
-        <Navbar role={role}/>
-            <div className="d-flex justify-content-center">
+          <div className="d-flex justify-content-center">
           <div className="row w-50 mt-5 p-5 border shadow-lg rounded">
             <div className="col-sm d-flex justify-content-center mb-3">
               <button className="btn btn-outline-dark d-flex flex-column align-items-center p-3" style={{ height: '240px' }}>
