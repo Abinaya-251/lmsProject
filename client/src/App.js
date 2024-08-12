@@ -22,7 +22,6 @@ function App() {
   if (isLoggedIn === null) {
     window.localStorage.setItem('isLoggedIn', 'false');
   }
-
   console.log("outside",isLoggedIn,"u",userType,location.pathname);
   
   
