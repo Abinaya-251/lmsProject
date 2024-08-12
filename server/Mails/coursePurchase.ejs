@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Course Purchase Confirmation</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        color: #333;
+      }
+      .container {
+        max-width: 600px;
+        margin: 20px auto;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+      }
+      .header {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px 8px 0 0;
+        text-align: center;
+      }
+      .content {
+        padding: 20px;
+        line-height: 1.6;
+      }
+      .footer {
+        background-color: #f1f1f1;
+        color: #555;
+        padding: 10px 20px;
+        text-align: center;
+        font-size: 12px;
+        border-radius: 0 0 8px 8px;
+      }
+      a {
+        color: #4caf50;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Course Purchase Confirmation</h1>
+      </div>
+      <div class="content">
+        <h2>Hello <%= StudentName %>,</h2>
+        <p>
+          Thank you for purchasing the course
+          <strong><%= CourseName %></strong>!
+        </p>
+        <p>
+          We’re thrilled to have you on board. Here’s what you can look forward
+          to:
+        </p>
+        <ul>
+          <li>Engaging course materials and resources</li>
+          <li>Expert guidance and support</li>
+          <li>Flexible learning pace and access</li>
+        </ul>
+        <p>
+          If you have any questions, please feel free to
+          <a href="mailto:abicloudtechsolutions@gmail.com">contact us</a>.
+        </p>
+        <p>Happy learning!</p>
+      </div>
+      <div class="footer">&copy; 2024 Our Service. All rights reserved.</div>
+    </div>
+  </body>
+</html>
